@@ -1,5 +1,7 @@
-//
-// Created by Me on 12/1/2025.
-//
+#include <iostream>
 
-#include "Solution.h"
+using namespace std;
+
+int main(){
+    cout << "Hello World";
+}
