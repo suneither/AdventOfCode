@@ -10,6 +10,8 @@ char ExtractDirection(const string& rotation);
 int ExtractNumber(const string& rotation);
 void RotateLeft(const int& number);
 void RotateRight(const int& number);
+void CalculateLeftPasses(const int& number);
+void CalculateRightPasses(const int& number);
 
 int main(){
 
@@ -23,10 +25,17 @@ int main(){
     string rotation;
     while (std::getline(file, rotation))
     {
+        int number = ExtractNumber(rotation);
         if (ExtractDirection(rotation) == 'L')
-            RotateLeft(ExtractNumber(rotation));
+        {
+            RotateLeft(number);
+            CalculateLeftPasses(number);
+        }
         else
-            RotateRight(ExtractNumber(rotation));
+        {
+            RotateRight(number);
+            CalculateRightPasses(number);
+        }
 
         if (current_number >= 100 || current_number < 0)
             current_number %= 100;
@@ -36,6 +45,16 @@ int main(){
     }
 
     cout << password << endl;
+}
+
+void CalculateRightPasses()
+{
+    current_number += current_number / 100;
+}
+
+void CalculateLeftPasses(const int& number)
+{
+    current_number += current_number / 100;
 }
 
 char ExtractDirection(const string& rotation)
