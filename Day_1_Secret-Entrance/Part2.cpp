@@ -8,10 +8,6 @@ int password = 0;
 
 char ExtractDirection(const string& rotation);
 int ExtractNumber(const string& rotation);
-void RotateLeft(const int& number);
-void RotateRight(const int& number);
-void CalculateLeftPasses(const int& number);
-void CalculateRightPasses(const int& number);
 
 int main(){
 
@@ -26,35 +22,36 @@ int main(){
     while (std::getline(file, rotation))
     {
         int number = ExtractNumber(rotation);
-        if (ExtractDirection(rotation) == 'L')
+        while (number != 0)
         {
-            RotateLeft(number);
-            CalculateLeftPasses(number);
-        }
-        else
-        {
-            RotateRight(number);
-            CalculateRightPasses(number);
-        }
+            switch (ExtractDirection(rotation))
+            {
+            case 'L':
+                {
+                    current_number--;
+                    break;
+                }
+            case 'R':
+                {
+                    current_number++;
+                    break;
+                }
+            default: break;
+            }
 
-        if (current_number >= 100 || current_number < 0)
-            current_number %= 100;
+            number--;
 
-        if (current_number == 0)
-            password++;
+            if (current_number == -100 ||
+                current_number == 0 ||
+                current_number == 100)
+            {
+                password++;
+                current_number = 0;
+            }
+        }
     }
 
     cout << password << endl;
-}
-
-void CalculateRightPasses()
-{
-    current_number += current_number / 100;
-}
-
-void CalculateLeftPasses(const int& number)
-{
-    current_number += current_number / 100;
 }
 
 char ExtractDirection(const string& rotation)
@@ -65,14 +62,4 @@ char ExtractDirection(const string& rotation)
 int ExtractNumber(const string& rotation)
 {
     return stoi( rotation.substr(1, rotation.size() - 1));
-}
-
-void RotateLeft(const int& number)
-{
-    current_number -= number;
-}
-
-void RotateRight(const int& number)
-{
-    current_number += number;
 }
